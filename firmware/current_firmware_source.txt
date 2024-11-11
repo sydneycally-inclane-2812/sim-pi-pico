@@ -1,0 +1,2 @@
+current firmware sauce:
+    https://micropython.org/download/PIMORONI_PICOLIPO/
