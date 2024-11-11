@@ -40,5 +40,5 @@ Advancements compared to the original:
 Contributions are welcome! If you have suggestions for improvements or features, please feel free to submit a pull request or open an issue.
 
 ## License
-The characters, behaviors and other creative work of the Pyogotchi © 2024 is licensed under CC BY-NC-SA 4.0. Distribution and sharing of the framework, libraries and its permutations are permitted with no restrictions.
+The design, behaviors and other creative works of the Pyogotchi © 2024 is licensed under CC BY-NC-SA 4.0. Distribution and sharing of the framework, libraries and its permutations are permitted with no restrictions.
 
