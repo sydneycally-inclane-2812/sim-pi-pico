@@ -4,6 +4,7 @@ import json
 
 '''
 Current features:
+- Mildly optimized from previous version
 - Specify if creating new file or opening existing file
 - Create a new canvas with specified dimensions
 - Draw/erase pixels by clicking and dragging
@@ -11,6 +12,12 @@ Current features:
 - Show/hide grid numbers based on pixel size
 - Save/load to JSON
 - Dump as bytearray
+'''
+
+'''
+Limitations:
+- No undo/redo functionality
+- Enforce dimensions to be multiples of 8
 '''
 class PixelArtApp:
     def __init__(self, root, width, height, pixel_size=20):
