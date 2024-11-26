@@ -11,6 +11,7 @@ import aht20
 import mfs
 from machine import Pin, ADC, I2C, Timer
 import neopixel
+import time
 
 # Initializing I2C
 i2c=machine.I2C(0,sda=Pin(0), scl=Pin(1), freq=400000)
@@ -102,7 +103,23 @@ def updateFace(timer):
         curr[0] += 1
     oled.show()
 
-
+num = 1
+num2 = 1
+f = True
 timer1 = machine.Timer()
 timer1.init(period=1000, mode=Timer.PERIODIC, callback=updateFace)
 
+# Fibonacci
+while True:
+    if f:
+        num += num2
+        print(num)
+        f = False
+    else:
+        num2 += num
+        print(num2)
+        f = True
+    time.sleep_ms(50)
+    
+timer1 = machine.Timer()
+timer1.init(period=1000, mode=Timer.PERIODIC, callback=updateFace)

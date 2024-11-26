@@ -7,3 +7,5 @@ time
 neopixel
 sys
 
+reference this please
+https://blog.martinfitzpatrick.com/displaying-images-oled-displays/
