@@ -1,7 +1,7 @@
-# Basic Python *(and maybe more)* Sprite Editing Client
+# Basic Python *(and maybe other platforms)* Sprite Editing Client
 This is a supportive client for creating and editing sprites for use with the Pyogotchi project, written in Python. The program allows for create/load existing sprites in different formats, simple editing and save/dump to JSON/bytearray to directly save into the Pi Pico storage.
 
-*Latest version: v2*
+*Latest version: v2, last updated on 26 Nov 2024*
 
 *Available in: Python*
 ## Current features
