@@ -2,23 +2,51 @@ import tkinter as tk
 from tkinter import simpledialog, filedialog, messagebox
 import json
 
-'''
-Current features:
-- Mildly optimized from previous version
-- Specify if creating new file or opening existing file
-- Create a new canvas with specified dimensions
-- Draw/erase pixels by clicking and dragging
-- Dynamically resize canvas and pixel size
-- Show/hide grid numbers based on pixel size
-- Save/load to JSON
-- Dump as bytearray
-'''
+# '''
+# TODO: 
+# Fix load function, 
+# Add create new file and open existing file options, 
+# Fix bytearray dump to dump into clipboard,
+# Save as txt instead of json,
+# Export as image at higher resolution for sharing,
+# Add option to dump as hex instead of binary,
+# '''
 
-'''
-Limitations:
-- No undo/redo functionality
-- Enforce dimensions to be multiples of 8
-'''
+# '''
+# This is not related to the code. It will be removed in the subsequent commit.
+# I just want to leave these words here for a bit. No more AI bullshit. 
+# Living is so god damn hard for some reason. Everywhere you see people absolutely 
+# glowing, people enjoying life in a deserted island, travelling the world, buying
+# the stuff they want, and here you are trying to stay afloat, dealing with family
+# issues from across the globe. 
+# Man how great would it be if everyone could have the same beginnings?
+# But hey, rant time is over. I really do enjoy working on this project. It's just
+# life is really hard right now, and I know it will pass. I will also get to enjoy
+# life. 
+# For now, I just want to believe it. I need to believe it.
+# Rant over, if you're reading this for whatever reasons I applaud you. This should
+# have been buried under hundreds of commits, otherwise I haven't been working hard
+# enough.
+# Thank you for checking out Pyogotchi, and thank you for sticking with me. 
+# '''
+
+# '''
+# Current features:
+# - Mildly optimized from previous version
+# - Specify if creating new file or opening existing file
+# - Create a new canvas with specified dimensions
+# - Draw/erase pixels by clicking and dragging
+# - Dynamically resize canvas and pixel size
+# - Show/hide grid numbers based on pixel size
+# - Save/load to JSON
+# - Dump as bytearray
+# '''
+
+# '''
+# Limitations:
+# - No undo/redo functionality
+# - Enforce dimensions to be multiples of 8
+# '''
 class PixelArtApp:
     def __init__(self, root, width, height, pixel_size=20):
         self.root = root
@@ -46,8 +74,11 @@ class PixelArtApp:
         menu.add_cascade(label="File", menu=file_menu)
         file_menu.add_command(label="Save", command=self.save)
         file_menu.add_command(label="Load", command=self.load)
-        file_menu.add_command(label="Dump as Bytearray", command=self.dump_bytearray)
-
+        file_menu.add_command(label="Dump as Bytearray", command=self.dump_bytearray) # Should be copy to clipboard as bytearray
+        # Add copy to clipboard as hex
+        # Add save as txt
+        # Add export as image at higher resolution
+        
     def draw_pixel(self, event):
         x = (event.x - 20) // self.pixel_size
         y = (event.y - 20) // self.pixel_size
@@ -187,6 +218,8 @@ if __name__ == "__main__":
         root = tk.Tk()
         root.title("Pixel Art Editor")
         root.geometry("800x600")  # Set initial window size
+        # TODO: load should get the dimensions first, initialize the canvas then load the file.
         app = PixelArtApp(root, 8, 8)  # Temporary size, will be updated on load
         app.load()
         root.mainloop()
+        
