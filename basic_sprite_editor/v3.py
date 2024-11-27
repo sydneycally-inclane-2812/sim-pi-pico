@@ -13,24 +13,6 @@ import json
 # '''
 
 # '''
-# This is not related to the code. It will be removed in the subsequent commit.
-# I just want to leave these words here for a bit. No more AI bullshit. 
-# Living is so god damn hard for some reason. Everywhere you see people absolutely 
-# glowing, people enjoying life in a deserted island, travelling the world, buying
-# the stuff they want, and here you are trying to stay afloat, dealing with family
-# issues from across the globe. 
-# Man how great would it be if everyone could have the same beginnings?
-# But hey, rant time is over. I really do enjoy working on this project. It's just
-# life is really hard right now, and I know it will pass. I will also get to enjoy
-# life. 
-# For now, I just want to believe it. I need to believe it.
-# Rant over, if you're reading this for whatever reasons I applaud you. This should
-# have been buried under hundreds of commits, otherwise I haven't been working hard
-# enough.
-# Thank you for checking out Pyogotchi, and thank you for sticking with me. 
-# '''
-
-# '''
 # Current features:
 # - Mildly optimized from previous version
 # - Specify if creating new file or opening existing file
