@@ -32,6 +32,16 @@ Advancements compared to the original:
 - [ ] Established behavior flow for the virtual pet
 - [ ] Designed and created sprites for the game
 
+## Sprite Editor
+Alongside developing a framework in Micropython, I've utilized the tkinter library to write a simple python program to easily design, save and share a sprite for a monochromic display.
+To use, simply download the latest release in the `Releases` tab, and run
+To recompile, follow these steps:
+1. Clone the project
+2. Install the required library (pyinstaller), either in a virtual environment or globally
+3. Run
+3. Locate the output file.
+Or simply run the latest .py script in the `.\basic_sprite_editor` folder if you have Python installed.
+
 ## Future Improvements
 - Upgrade to a more powerful microcontroller (RPi Pico 2W 16MB when available)
 - Integrate additional sensors, such as accelerometers and Wi-Fi capabilities
