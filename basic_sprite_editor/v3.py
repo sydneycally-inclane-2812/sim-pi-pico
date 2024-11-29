@@ -10,6 +10,7 @@ import json
 # Save as txt instead of json,
 # Export as image at higher resolution for sharing,
 # Add option to dump as hex instead of binary,
+# Explicitly force dimensions to be multiples of 8 by rejecting any other values at the canvas size prompt,
 # '''
 
 # '''
@@ -20,14 +21,14 @@ import json
 # - Draw/erase pixels by clicking and dragging
 # - Dynamically resize canvas and pixel size
 # - Show/hide grid numbers based on pixel size
-# - Save/load to JSON
+# - Save/load to CSV
 # - Dump as bytearray
 # '''
 
 # '''
 # Limitations:
 # - No undo/redo functionality
-# - Enforce dimensions to be multiples of 8
+# - Implicitly enforce dimensions to be multiples of 8
 # '''
 class PixelArtApp:
     def __init__(self, root, width, height, pixel_size=20):
@@ -54,12 +55,12 @@ class PixelArtApp:
         self.root.config(menu=menu)
         file_menu = tk.Menu(menu)
         menu.add_cascade(label="File", menu=file_menu)
-        file_menu.add_command(label="Save", command=self.save)
-        file_menu.add_command(label="Load", command=self.load)
-        file_menu.add_command(label="Dump as Bytearray", command=self.dump_bytearray) # Should be copy to clipboard as bytearray
-        # Add copy to clipboard as hex
-        # Add save as txt
-        # Add export as image at higher resolution
+        file_menu.add_command(label="Save (.JSON/.txt)", command=self.save)
+        file_menu.add_command(label="Load (.JSON/.txt)", command=self.load)
+        file_menu.add_separator()
+        file_menu.add_command(label="Copy as Bytearray", command=self.dump_bytearray) # Should be copy to clipboard as bytearray
+        file_menu.add_command(label="Copy as Hex", command=self.dump_hex) # Should be copy to clipboard as hex
+        
         
     def draw_pixel(self, event):
         x = (event.x - 20) // self.pixel_size
@@ -86,35 +87,79 @@ class PixelArtApp:
                 )
     
     def save(self):
-        file_path = filedialog.asksaveasfilename(defaultextension=".json", filetypes=[("JSON files", "*.json")])
+        file_path = filedialog.asksaveasfilename(defaultextension=".txt", filetypes=[("Text File", "*.txt"), ("JSON File", "*.json")])
         if file_path:
-            with open(file_path, 'w') as file:
-                json.dump(self.pixels, file)
-
-    def load(self):
-        file_path = filedialog.askopenfilename(filetypes=[("JSON files", "*.json")])
+            if file_path.endswith('.json'):
+                with open(file_path, 'w') as file:
+                    json.dump(self.pixels, file)
+            elif file_path.endswith('.txt'):
+                with open(file_path, 'w') as file:
+                    for row in self.pixels:
+                        file.write(','.join(map(str, row)) + '\n')
         
+    def load(self):
+        def _load(file_path):
+            buffer = []
+            if file_path:
+                if file_path.endswith('.json'):
+                    with open(file_path, 'r') as file:
+                        buffer = json.load(file)
+                elif file_path.endswith('.txt'):
+                    with open(file_path, 'r') as file:
+                        buffer = [list(map(int, line.strip().split(','))) for line in file]
+                return buffer
+                
+        def _sync_buffer():
+            self.height = len(self.buffer)
+            self.width = len(self.buffer[0])
+            self.pixels = self.buffer
+            self.resize_canvas(self)
+                
+        file_path = filedialog.askopenfilename(filetypes=[("Text files", "*.txt"), ("JSON files", "*.json")])
         if file_path:
             with open(file_path, 'r') as file:
-                self.pixels = json.load(file)
-            self.redraw_canvas()
+                self.buffer = _load(file_path) # Extract the file contents to a buffer
+                if len(self.pixels) != len(self.buffer) or len(self.pixels[0]) != len(self.buffer[0]):
+                    dialog = tk.Toplevel(self.root)
+                    dialog.title("Warning")
+                    tk.Label(dialog, text=r"The dimensions of the loaded file do not match the current canvas size. \n Continuing will overwrite the current canvas. Do you want to continue?").pack(padx=10, pady=10)
+                    tk.Button(dialog, text="Continue", command=lambda:[dialog.destroy(), _sync_buffer()]).pack(side=tk.LEFT, padx=10, pady=10)
+                    tk.Button(dialog, text="Cancel", command=dialog.destroy).pack(side=tk.RIGHT, padx=10, pady=10)
+                else:
+                    dialog = tk.Toplevel(self.root)
+                    dialog.title("Warning")
+                    tk.Label(dialog, text=r"Do you want to overwrite this file?").pack(padx=10, pady=10)
+                    tk.Button(dialog, text="Yes", command=lambda:[dialog.destroy(), _sync_buffer()]).pack(side=tk.LEFT, padx=10, pady=10)
+                    tk.Button(dialog, text="No", command=dialog.destroy).pack(side=tk.RIGHT, padx=10, pady=10)
+    
 
-    def dump_bytearray(self):
-        bytearray_data = self.convert_to_bytearray()
-        bytearray_str = ', '.join(f'0b{byte:08b}' for byte in bytearray_data)
-        messagebox.showinfo("Bytearray Dump", f"bytearray([{bytearray_str}])")
-
-    def convert_to_bytearray(self):
-        bytearray_data = bytearray()
+    def _to_bytearray(self):
+        data = bytearray()
         for y in range(self.height):
             for x in range(0, self.width, 8):
                 byte = 0
-                for bit in range(8):
-                    if x + bit < self.width and self.pixels[y][x + bit]:
-                        byte |= (1 << (7 - bit))
-                bytearray_data.append(byte)
-        return bytearray_data
+                for i in range(8):
+                    if x + i < self.width and self.pixels[y][x + i]:
+                        byte |= 1 << (7 - i)
+                data.append(byte)
+        return data
+    
+    def dump_bytearray(self):
+        data = self._to_bytearray()
+        data_str = ', '.join(f'0b{byte:08b}' for byte in data)
+        self.root.clipboard_clear()
+        self.root.clipboard_append(f"bytearray([{data_str}])")
+        messagebox.showinfo("Copy as Bytearray", "Bytearray copied to clipboard")
+        self.root.update()
 
+    def dump_hex(self):
+        data = self._to_bytearray()
+        data_str = ', '.join(f'0x{byte:02x}' for byte in data)
+        self.root.clipboard_clear()
+        self.root.clipboard_append(f"[{data_str}]")
+        messagebox.showinfo("Copy as Hex","Hex saved to Clipboard")
+        self.root.update()        
+        
     def redraw_canvas(self):
         self.canvas.delete("all")
         self.draw_grid()
