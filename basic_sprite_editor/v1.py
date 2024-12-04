@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import simpledialog, filedialog
+from tkinter import simpledialog, filedialog, messagebox
 import json
 
 class PixelArtApp:
