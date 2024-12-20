@@ -2,39 +2,22 @@ import tkinter as tk
 from tkinter import simpledialog, filedialog, messagebox
 import json
 
-# This started as v3.1 but damn there's so many changes might as well make it v4.0
-# '''
-#     TODO Minifixes:
-#     - [DONE] Text in the help menu is now more readable
-#     - [DONE] Format the bytearray, hex string and C++ array with line breaks for better readability
-#     - [DONE] URGENT: unify save as hex or save as bin, currently adding options: Resolved with adding options to save for both
-# '''
 
-# '''
-#     TODO:
-#     - [DONE] Add rotation and flipping options (horizontal, vertical) (maybe another in a separate tab for preview)
-#     - Add load from text file (open new window, paste text, verify, preview, confirm and load)
-#     - Actually check and enforce the dimensions to be multiples of 8
-# '''
-# '''
-# Current features:
-# - Mildly optimized from previous version
-# - Specify if creating new file or opening existing file
-# - Create a new canvas with specified dimensions
-# - Draw/erase pixels by clicking and dragging
-# - Dynamically resize canvas and pixel size
-# - Show/hide grid numbers based on pixel size
-# - Save/load to CSV
-# - Dump as bytearray
-# '''
+'''
+Add more advanced canvas manipulation features:
+- Automatically reduce canvas size to the minimum required
+- Copy/paste, In-clipboard manipulation: flip, rotate, invert
+- Preview mode
+- Maaaaybe undo/redo
+'''
 
 # '''
 # Limitations:
 # - No undo/redo functionality
-# - Implicitly enforce dimensions to be multiples of 8
 # '''
 
-help_text = '''
+help_text =\
+'''
 This is a simple pixel art editor that allows you to create monochromic sprites. \n
 To draw, left click and drag the mouse over the canvas. \n
 To erase, right click and drag the mouse. \n
@@ -53,7 +36,8 @@ If you have a problem when the program doesn't show the new canvas properly afte
 I am working on a fix. 
 '''
 
-about_text = '''
+about_text =\
+'''
 Sprite Editor v3.1 - Part of the Pyogotchi project
 Hung Dat Tran
 Email: saigondese3000.aus@duck.com

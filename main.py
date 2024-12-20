@@ -12,6 +12,8 @@ import mfs
 from machine import Pin, ADC, I2C, Timer
 import neopixel
 import time
+import env
+import framebuf
 
 # Initializing I2C
 i2c=machine.I2C(0,sda=Pin(0), scl=Pin(1), freq=400000)
@@ -25,6 +27,8 @@ np = neopixel.NeoPixel(Pin(23, Pin.OUT), 1)
 rtc = ds3231.DS3231(i2c)
 oled = ssd1306.SSD1306_I2C(128, 64, i2c)
 aht = aht20.AHT20(i2c)
+tree = env.tree
+block = env.solid_32x24
 
 month_list = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 counter = None # Syncs time every 1000 seconds and power on
@@ -38,8 +42,8 @@ def buttonHandler(pin):
     display_status = not display_status
 button.irq(trigger=Pin.IRQ_FALLING, handler=buttonHandler)
 
-np[0] = (10, 10, 10)  # Set the first LED to red
-np.write()  # Update the strip to show the changes
+# np[0] = (10, 10, 10)  # Set the first LED to red
+# np.write()  # Update the strip to show the changes
 l1.value(1)
 
 def updateFace(timer):
@@ -65,6 +69,10 @@ def updateFace(timer):
         
     counter += 1
     oled.fill(0)
+    #fbuf = framebuf.FrameBuffer(tree, 8, 8, framebuf.MONO_HLSB)
+    fbuf1 = framebuf.FrameBuffer(block, 32, 24, framebuf.MONO_HLSB)
+    oled.blit(fbuf1, 75, 85)
+    #oled.blit(fbuf, 0, 0)
     oled.text(str(curr[3]), 0, 0)
     oled.text(str(curr[4]), 20, 0)
     oled.text(str(curr[5]), 40, 0)
@@ -103,23 +111,5 @@ def updateFace(timer):
         curr[0] += 1
     oled.show()
 
-num = 1
-num2 = 1
-f = True
-timer1 = machine.Timer()
-timer1.init(period=1000, mode=Timer.PERIODIC, callback=updateFace)
-
-# Fibonacci
-while True:
-    if f:
-        num += num2
-        print(num)
-        f = False
-    else:
-        num2 += num
-        print(num2)
-        f = True
-    time.sleep_ms(50)
-    
 timer1 = machine.Timer()
 timer1.init(period=1000, mode=Timer.PERIODIC, callback=updateFace)
