@@ -144,6 +144,8 @@ class PixelArtApp:
                 elif file_path.endswith('.txt'):
                     with open(file_path, 'r') as file:
                         buffer = [list(map(int, line.strip().split(','))) for line in file]
+                else:
+                    messagebox.showinfo("Error", "Invalid file format. Please select a .txt or .json file.")
                 return buffer
                 
         def _sync_buffer():
@@ -152,7 +154,7 @@ class PixelArtApp:
             self.pixels = self.buffer
             self.redraw_canvas()
                 
-        file_path = filedialog.askopenfilename(filetypes=[("Text files", "*.txt"), ("JSON files", "*.json")])
+        file_path = filedialog.askopenfilename(filetypes=[("Text files", "*.txt"), ("JSON files", "*.json"), ("All files", "*.*")])
         if file_path:
             with open(file_path, 'r') as file:
                 self.buffer = _load(file_path) # Extract the file contents to a buffer
