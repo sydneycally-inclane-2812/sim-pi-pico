@@ -3,21 +3,17 @@ from tkinter import simpledialog, filedialog, messagebox
 import json
 
 
-'''
-Add more advanced canvas manipulation features:
-- Automatically reduce canvas size to the minimum required
-- Copy/paste, In-clipboard manipulation: flip, rotate, invert
-- Preview mode
-- Maaaaybe undo/redo
-'''
-
 # '''
-# Limitations:
-# - No undo/redo functionality
+# Add more advanced canvas manipulation features:
+# - Automatically reduce canvas size to the minimum required
+# - Copy/paste, In-clipboard manipulation: flip, rotate, invert
+# - Preview mode
+# - Maaaaybe undo/redo
+# - Add save to image, select dimensions of image
 # '''
 
-help_text =\
-'''
+
+help_text = '''
 This is a simple pixel art editor that allows you to create monochromic sprites. \n
 To draw, left click and drag the mouse over the canvas. \n
 To erase, right click and drag the mouse. \n
@@ -36,8 +32,7 @@ If you have a problem when the program doesn't show the new canvas properly afte
 I am working on a fix. 
 '''
 
-about_text =\
-'''
+about_text = '''
 Sprite Editor v3.1 - Part of the Pyogotchi project
 Hung Dat Tran
 Email: saigondese3000.aus@duck.com
@@ -196,7 +191,7 @@ class PixelArtApp:
             elif dtype == 'hex':
                 data_str += f'0x{byte:02x}, '
         self.root.clipboard_clear()
-        self.root.clipboard_append(f"bytearray(\\ \n[{data_str.strip(', ')}])")
+        self.root.clipboard_append(f"bytearray([\n{data_str.strip(', ')}])")
         messagebox.showinfo("Copy as Bytearray", "Bytearray copied to clipboard")
         self.root.update()
 
@@ -347,15 +342,9 @@ def get_canvas_size():
 
     tk.Button(dialog, text="OK", command=on_ok).pack(padx=10, pady=10)
     root.mainloop()
+    root.destroy()
     return width, height
         
-
-    tk.Button(dialog, text="OK", command=on_ok).pack(pady=10)
-
-    root.mainloop()
-    root.destroy()
-
-    return width, height
 
 def choose_action():
     root = tk.Tk()
@@ -434,5 +423,4 @@ def begin_program(action = None):
                     stop_program(root)
 
 if __name__ == "__main__":
-    begin_program()    
-        
+    begin_program()            

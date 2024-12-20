@@ -212,7 +212,7 @@ class PixelArtApp:
             elif dtype == 'hex':
                 data_str += f'0x{byte:02x}, '
         self.root.clipboard_clear()
-        self.root.clipboard_append(f"bytearray(\\ \n[{data_str.strip(', ')}])")
+        self.root.clipboard_append(f"bytearray([\n{data_str.strip(', ')}])")
         messagebox.showinfo("Copy as Bytearray", "Bytearray copied to clipboard")
         self.root.update()
 
@@ -363,15 +363,9 @@ def get_canvas_size():
 
     tk.Button(dialog, text="OK", command=on_ok).pack(padx=10, pady=10)
     root.mainloop()
+    root.destroy()
     return width, height
         
-
-    tk.Button(dialog, text="OK", command=on_ok).pack(pady=10)
-
-    root.mainloop()
-    root.destroy()
-
-    return width, height
 
 def choose_action():
     root = tk.Tk()

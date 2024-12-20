@@ -28,7 +28,6 @@ rtc = ds3231.DS3231(i2c)
 oled = ssd1306.SSD1306_I2C(128, 64, i2c)
 aht = aht20.AHT20(i2c)
 tree = env.tree
-block = env.solid_32x24
 
 month_list = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 counter = None # Syncs time every 1000 seconds and power on
@@ -69,9 +68,9 @@ def updateFace(timer):
         
     counter += 1
     oled.fill(0)
-    #fbuf = framebuf.FrameBuffer(tree, 8, 8, framebuf.MONO_HLSB)
-    fbuf1 = framebuf.FrameBuffer(block, 32, 24, framebuf.MONO_HLSB)
-    oled.blit(fbuf1, 75, 85)
+    fbuf = framebuf.FrameBuffer(tree, 8, 8, framebuf.MONO_HLSB)
+    #fbuf1 = framebuf.FrameBuffer(block, 32, 24, framebuf.MONO_HLSB)
+    oled.blit(fbuf, 75, 85)
     #oled.blit(fbuf, 0, 0)
     oled.text(str(curr[3]), 0, 0)
     oled.text(str(curr[4]), 20, 0)
