@@ -53,7 +53,7 @@ Currently, three data structures are planned, and one is supported by the accomp
     - Dimensions: *Tuple* with data on (width, height).
     - Animation: *Dictionary* with values being an *Array* containing pointers to static sprites for a specific case.
     - A better approach would be containerizing everything in a class but might lead to reference issues.
-- **Constructed sprites [TODO]**: This is the most computationally expensive and difficult to configure sprite, but if properly executed will create extremely realistic and pleasing sprites. Recommended for main sprites such as the pets.
+- **Procedural sprites [TODO]**: This is the most computationally expensive and difficult to configure sprite, but if properly executed will create extremely realistic and pleasing sprites. Recommended for main sprites such as the pets.
     - Total dimensions: *Tuple* with data on (width, height), for the dimension of the fully constructed sprites.
     - Subsprite data: *Dictionary* with data on the dimensions of each subsprite as well as the *hinge point*, where things are attached.
     - Hinge rules: no idea how this would be executed for now.
