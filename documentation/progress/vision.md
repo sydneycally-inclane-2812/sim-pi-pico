@@ -26,15 +26,16 @@ The current plan is to run three non-blocking update routines with different sch
     - Runs on **Core 0**.
 
 2. **The immediate interactions loop**:
-    - Preferably once or twice a second.
+    - Preferably once a second.
     - Takes care of the interactions between the sprite, user, and the environment. Takes care of handling user input, interpreting it, and giving it to the graphics update loop.
     - Takes in data from the global update to respond to changes (schedules, weather, etc.), and lets the main graphics update loop update accordingly.
     - Maintains a stack to keep track of overlapping assets.
+    - Maintains the clock
     - Runs on **Core 1**.
 
 3. **The global update loop**:
     - Preferably once every 10 seconds or longer.
-    - Takes care of reading the sensors, interpreting it based on a given schedule, and adding some randomness/variation (sleeping, hunger, etc.).
+    - Takes care of reading the sensors, syncing the clock, interpreting it based on a given schedule, and adding some randomness/variation (sleeping, hunger, etc.).
     - Runs on **Core 1**.
 
 ### Subenvironments (minigames and special events)

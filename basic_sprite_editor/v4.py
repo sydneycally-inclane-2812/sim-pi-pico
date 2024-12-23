@@ -9,7 +9,8 @@ import json
 # - Copy/paste, In-clipboard manipulation: flip, rotate, invert
 # - Preview mode
 # - Maaaaybe undo/redo
-# - Add save to image, select dimensions of image
+# - Add save to image, select dimensions of image\
+# - Add masking feature
 # '''
 
 
@@ -193,7 +194,7 @@ class PixelArtApp:
             elif dtype == 'hex':
                 data_str += f'0x{byte:02x}, '
         self.root.clipboard_clear()
-        self.root.clipboard_append(f"bytearray([\n{data_str.strip(', ')}])")
+        self.root.clipboard_append(f"(({self.width}, {self.height}),\nbytearray([\n{data_str.strip(', ')}]))")
         messagebox.showinfo("Copy as Bytearray", "Bytearray copied to clipboard")
         self.root.update()
 

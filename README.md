@@ -11,7 +11,7 @@ Included are MicroPython library implementations for:
 - RC522 (TODO)
 
 
-Documentations for these libraries can be found [here](google.com).
+Documentations for these libraries can be found (once they are written) [here](google.com). 
 
 
 Advancements compared to the original:
