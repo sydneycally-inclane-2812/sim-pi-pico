@@ -11,6 +11,7 @@ import json
 # - Maaaaybe undo/redo
 # - Add save to image, select dimensions of image\
 # - Add masking feature
+# - Add downscale/upscale feature
 # '''
 
 
