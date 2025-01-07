@@ -11,7 +11,7 @@ Included are MicroPython library implementations for:
 - RC522 (TODO)
 
 
-Documentations for these libraries can be found [here](google.com).
+Documentations for these libraries can be found (once they are written) [here](https://github.com/sydneycally-inclane-2812/pyogotchi/blob/84fb608efcce4971d4bae1670eec62210f19c055/documentation/progress/vision.md). 
 
 
 Advancements compared to the original:
