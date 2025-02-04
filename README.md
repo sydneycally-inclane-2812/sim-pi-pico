@@ -2,6 +2,7 @@
 ---
 This project aims to create a Tamagotchi-like simulation game for the Raspberry Pi Pico. The game allows users to experience the joy of having a customizable virtual pet without the additional costs and commitments associated with real pets. By integrating various sensors, including photoresistors, an RFID reader, and a 2.4GHz radio, the game will feature engaging behaviors and interactions that enhance the user experience.
 
+![the device built with perf boards](assets/IMG_8702.jpg)
 
 Included are MicroPython library implementations for:
 - SSD1306
